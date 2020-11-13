@@ -31,9 +31,6 @@
                         {{ trans('cruds.mallUnit.fields.floor') }}
                     </th>
                     <th>
-                        {{ trans('cruds.mallUnit.fields.merchant') }}
-                    </th>
-                    <th>
                         {{ trans('cruds.mallUnit.fields.size') }}
                     </th>
                     <th>
@@ -41,6 +38,9 @@
                     </th>
                     <th>
                         {{ trans('cruds.mallUnit.fields.rental') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.mallUnit.fields.merchant') }}
                     </th>
                     <th>
                         &nbsp;
@@ -101,10 +101,10 @@
 { data: 'id', name: 'id' },
 { data: 'unit_no', name: 'unit_no' },
 { data: 'floor', name: 'floor' },
-{ data: 'merchant_company_name', name: 'merchant.company_name' },
 { data: 'size', name: 'size' },
 { data: 'status', name: 'status' },
 { data: 'rental', name: 'rental' },
+{ data: 'merchant', name: 'merchant' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

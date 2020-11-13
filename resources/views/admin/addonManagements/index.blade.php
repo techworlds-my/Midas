@@ -75,7 +75,7 @@
                                 <input type="checkbox" disabled="disabled" {{ $addonManagement->is_enable ? 'checked' : '' }}>
                             </td>
                             <td>
-                                {{ $addonManagement->item->title ?? '' }}
+                                {{ $addonManagement->item ?? '' }}
                             </td>
                             <td>
                                 @can('addon_management_show')

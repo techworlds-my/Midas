@@ -10,34 +10,6 @@
         <form method="POST" action="{{ route("admin.reward-lists.store") }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
-                <label for="username_id">{{ trans('cruds.rewardList.fields.username') }}</label>
-                <select class="form-control select2 {{ $errors->has('username') ? 'is-invalid' : '' }}" name="username_id" id="username_id">
-                    @foreach($usernames as $id => $username)
-                        <option value="{{ $id }}" {{ old('username_id') == $id ? 'selected' : '' }}>{{ $username }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('username'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('username') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.rewardList.fields.username_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label class="required" for="reward_id">{{ trans('cruds.rewardList.fields.reward') }}</label>
-                <select class="form-control select2 {{ $errors->has('reward') ? 'is-invalid' : '' }}" name="reward_id" id="reward_id" required>
-                    @foreach($rewards as $id => $reward)
-                        <option value="{{ $id }}" {{ old('reward_id') == $id ? 'selected' : '' }}>{{ $reward }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('reward'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('reward') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.rewardList.fields.reward_helper') }}</span>
-            </div>
-            <div class="form-group">
                 <label class="required" for="reward_type">{{ trans('cruds.rewardList.fields.reward_type') }}</label>
                 <input class="form-control {{ $errors->has('reward_type') ? 'is-invalid' : '' }}" type="text" name="reward_type" id="reward_type" value="{{ old('reward_type', '') }}" required>
                 @if($errors->has('reward_type'))
@@ -56,6 +28,26 @@
                     </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.rewardList.fields.amount_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="username">{{ trans('cruds.rewardList.fields.username') }}</label>
+                <input class="form-control {{ $errors->has('username') ? 'is-invalid' : '' }}" type="text" name="username" id="username" value="{{ old('username', '') }}">
+                @if($errors->has('username'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('username') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.rewardList.fields.username_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="reward">{{ trans('cruds.rewardList.fields.reward') }}</label>
+                <input class="form-control {{ $errors->has('reward') ? 'is-invalid' : '' }}" type="text" name="reward" id="reward" value="{{ old('reward', '') }}">
+                @if($errors->has('reward'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('reward') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.rewardList.fields.reward_helper') }}</span>
             </div>
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">

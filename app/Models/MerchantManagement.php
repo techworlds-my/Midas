@@ -31,7 +31,6 @@ class MerchantManagement extends Model
         'position',
         'category_id',
         'sub_cateogry_id',
-        'created_by_id',
         'website',
         'facebook',
         'instagram',
@@ -42,6 +41,7 @@ class MerchantManagement extends Model
         'created_at',
         'updated_at',
         'deleted_at',
+        'created_by_id',
     ];
 
     protected function serializeDate(DateTimeInterface $date)
@@ -59,13 +59,13 @@ class MerchantManagement extends Model
         return $this->belongsTo(MerchantSubCategory::class, 'sub_cateogry_id');
     }
 
-    public function created_by()
-    {
-        return $this->belongsTo(User::class, 'created_by_id');
-    }
-
     public function level()
     {
         return $this->belongsTo(MerchantLevel::class, 'level_id');
+    }
+
+    public function created_by()
+    {
+        return $this->belongsTo(User::class, 'created_by_id');
     }
 }

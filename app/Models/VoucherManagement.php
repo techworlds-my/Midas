@@ -26,7 +26,6 @@ class VoucherManagement extends Model
     ];
 
     protected $fillable = [
-        'merchant_id',
         'vouchercode',
         'discount_type',
         'value',
@@ -42,6 +41,8 @@ class VoucherManagement extends Model
         'is_free_shipping',
         'is_credit_purchase',
         'redeem_point',
+        'merchant',
+        'item',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -52,19 +53,9 @@ class VoucherManagement extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
-    public function merchant()
-    {
-        return $this->belongsTo(MerchantManagement::class, 'merchant_id');
-    }
-
     public function item_category()
     {
         return $this->belongsTo(ItemCateogry::class, 'item_category_id');
-    }
-
-    public function items()
-    {
-        return $this->belongsToMany(ItemManagement::class);
     }
 
     public function getExpiredAttribute($value)

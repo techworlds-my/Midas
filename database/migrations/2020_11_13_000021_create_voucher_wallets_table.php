@@ -12,6 +12,8 @@ class CreateVoucherWalletsTable extends Migration
             $table->increments('id');
             $table->boolean('is_redeem')->default(0);
             $table->string('usage')->nullable();
+            $table->string('username');
+            $table->string('voucher')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

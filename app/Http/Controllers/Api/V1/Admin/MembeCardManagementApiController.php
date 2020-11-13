@@ -17,7 +17,7 @@ class MembeCardManagementApiController extends Controller
     {
         abort_if(Gate::denies('membe_card_management_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new MembeCardManagementResource(MembeCardManagement::with(['user_name'])->get());
+        return new MembeCardManagementResource(MembeCardManagement::all());
     }
 
     public function store(StoreMembeCardManagementRequest $request)
@@ -33,7 +33,7 @@ class MembeCardManagementApiController extends Controller
     {
         abort_if(Gate::denies('membe_card_management_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new MembeCardManagementResource($membeCardManagement->load(['user_name']));
+        return new MembeCardManagementResource($membeCardManagement);
     }
 
     public function update(UpdateMembeCardManagementRequest $request, MembeCardManagement $membeCardManagement)

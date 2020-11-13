@@ -34,9 +34,6 @@
                         {{ trans('cruds.orderStatus.fields.in_enable') }}
                     </th>
                     <th>
-                        {{ trans('cruds.orderManagement.fields.username') }}
-                    </th>
-                    <th>
                         {{ trans('cruds.orderManagement.fields.voucher') }}
                     </th>
                     <th>
@@ -64,10 +61,13 @@
                         {{ trans('cruds.orderManagement.fields.comment') }}
                     </th>
                     <th>
+                        {{ trans('cruds.orderManagement.fields.transaction') }}
+                    </th>
+                    <th>
                         {{ trans('cruds.orderManagement.fields.merchant') }}
                     </th>
                     <th>
-                        {{ trans('cruds.orderManagement.fields.transaction') }}
+                        {{ trans('cruds.orderManagement.fields.username') }}
                     </th>
                     <th>
                         &nbsp;
@@ -129,7 +129,6 @@
 { data: 'order', name: 'order' },
 { data: 'status_status', name: 'status.status' },
 { data: 'status.in_enable', name: 'status.in_enable' },
-{ data: 'username_username', name: 'username.username' },
 { data: 'voucher', name: 'voucher' },
 { data: 'address', name: 'address' },
 { data: 'price', name: 'price' },
@@ -139,8 +138,9 @@
 { data: 'paymentmethod_method', name: 'paymentmethod.method' },
 { data: 'paymentmethod.in_enable', name: 'paymentmethod.in_enable' },
 { data: 'comment', name: 'comment' },
-{ data: 'merchant', name: 'merchant' },
 { data: 'transaction', name: 'transaction' },
+{ data: 'merchant', name: 'merchant' },
+{ data: 'username', name: 'username' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

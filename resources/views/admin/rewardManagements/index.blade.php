@@ -25,9 +25,6 @@
                         {{ trans('cruds.rewardManagement.fields.id') }}
                     </th>
                     <th>
-                        {{ trans('cruds.rewardManagement.fields.merchant') }}
-                    </th>
-                    <th>
                         {{ trans('cruds.rewardManagement.fields.category') }}
                     </th>
                     <th>
@@ -56,6 +53,9 @@
                     </th>
                     <th>
                         {{ trans('cruds.rewardManagement.fields.voucher') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.rewardManagement.fields.merchant') }}
                     </th>
                     <th>
                         &nbsp;
@@ -114,7 +114,6 @@
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
-{ data: 'merchant_merchant', name: 'merchant.merchant' },
 { data: 'category_category', name: 'category.category' },
 { data: 'category.is_enable', name: 'category.is_enable' },
 { data: 'expired', name: 'expired' },
@@ -124,7 +123,8 @@
 { data: 'referral_amount', name: 'referral_amount' },
 { data: 'bonus', name: 'bonus' },
 { data: 'point', name: 'point' },
-{ data: 'voucher_vouchercode', name: 'voucher.vouchercode' },
+{ data: 'voucher', name: 'voucher' },
+{ data: 'merchant', name: 'merchant' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

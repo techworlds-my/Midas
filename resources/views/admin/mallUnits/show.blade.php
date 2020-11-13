@@ -41,14 +41,6 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.mallUnit.fields.merchant') }}
-                        </th>
-                        <td>
-                            {{ $mallUnit->merchant->company_name ?? '' }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
                             {{ trans('cruds.mallUnit.fields.size') }}
                         </th>
                         <td>
@@ -69,6 +61,14 @@
                         </th>
                         <td>
                             {{ $mallUnit->rental }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.mallUnit.fields.merchant') }}
+                        </th>
+                        <td>
+                            {{ $mallUnit->merchant }}
                         </td>
                     </tr>
                 </tbody>

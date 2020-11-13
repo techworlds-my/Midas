@@ -17,7 +17,7 @@ class VoucherWalletApiController extends Controller
     {
         abort_if(Gate::denies('voucher_wallet_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new VoucherWalletResource(VoucherWallet::with(['username', 'voucher'])->get());
+        return new VoucherWalletResource(VoucherWallet::all());
     }
 
     public function store(StoreVoucherWalletRequest $request)
@@ -33,7 +33,7 @@ class VoucherWalletApiController extends Controller
     {
         abort_if(Gate::denies('voucher_wallet_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new VoucherWalletResource($voucherWallet->load(['username', 'voucher']));
+        return new VoucherWalletResource($voucherWallet);
     }
 
     public function update(UpdateVoucherWalletRequest $request, VoucherWallet $voucherWallet)

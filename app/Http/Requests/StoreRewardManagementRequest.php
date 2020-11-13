@@ -17,10 +17,6 @@ class StoreRewardManagementRequest extends FormRequest
     public function rules()
     {
         return [
-            'merchant_id'     => [
-                'required',
-                'integer',
-            ],
             'category_id'     => [
                 'required',
                 'integer',
@@ -56,6 +52,14 @@ class StoreRewardManagementRequest extends FormRequest
                 'max:2147483647',
             ],
             'point'           => [
+                'string',
+                'nullable',
+            ],
+            'voucher'         => [
+                'string',
+                'nullable',
+            ],
+            'merchant'        => [
                 'string',
                 'nullable',
             ],

@@ -105,14 +105,6 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.merchantManagement.fields.created_by') }}
-                        </th>
-                        <td>
-                            {{ $merchantManagement->created_by->username ?? '' }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
                             {{ trans('cruds.merchantManagement.fields.website') }}
                         </th>
                         <td>

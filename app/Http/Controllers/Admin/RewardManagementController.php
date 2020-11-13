@@ -6,10 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyRewardManagementRequest;
 use App\Http\Requests\StoreRewardManagementRequest;
 use App\Http\Requests\UpdateRewardManagementRequest;
-use App\Models\MerchantManagement;
 use App\Models\RewardCatogery;
 use App\Models\RewardManagement;
-use App\Models\VoucherManagement;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,7 +20,7 @@ class RewardManagementController extends Controller
         abort_if(Gate::denies('reward_management_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = RewardManagement::with(['merchant', 'category', 'voucher'])->select(sprintf('%s.*', (new RewardManagement)->table));
+            $query = RewardManagement::with(['category'])->select(sprintf('%s.*', (new RewardManagement)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -46,10 +44,6 @@ class RewardManagementController extends Controller
             $table->editColumn('id', function ($row) {
                 return $row->id ? $row->id : "";
             });
-            $table->addColumn('merchant_merchant', function ($row) {
-                return $row->merchant ? $row->merchant->merchant : '';
-            });
-
             $table->addColumn('category_category', function ($row) {
                 return $row->category ? $row->category->category : '';
             });
@@ -76,11 +70,14 @@ class RewardManagementController extends Controller
             $table->editColumn('point', function ($row) {
                 return $row->point ? $row->point : "";
             });
-            $table->addColumn('voucher_vouchercode', function ($row) {
-                return $row->voucher ? $row->voucher->vouchercode : '';
+            $table->editColumn('voucher', function ($row) {
+                return $row->voucher ? $row->voucher : "";
+            });
+            $table->editColumn('merchant', function ($row) {
+                return $row->merchant ? $row->merchant : "";
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'merchant', 'category', 'voucher']);
+            $table->rawColumns(['actions', 'placeholder', 'category']);
 
             return $table->make(true);
         }
@@ -92,13 +89,9 @@ class RewardManagementController extends Controller
     {
         abort_if(Gate::denies('reward_management_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $merchants = MerchantManagement::all()->pluck('merchant', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $categories = RewardCatogery::all()->pluck('category', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $vouchers = VoucherManagement::all()->pluck('vouchercode', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        return view('admin.rewardManagements.create', compact('merchants', 'categories', 'vouchers'));
+        return view('admin.rewardManagements.create', compact('categories'));
     }
 
     public function store(StoreRewardManagementRequest $request)
@@ -112,15 +105,11 @@ class RewardManagementController extends Controller
     {
         abort_if(Gate::denies('reward_management_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $merchants = MerchantManagement::all()->pluck('merchant', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $categories = RewardCatogery::all()->pluck('category', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $vouchers = VoucherManagement::all()->pluck('vouchercode', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $rewardManagement->load('category');
 
-        $rewardManagement->load('merchant', 'category', 'voucher');
-
-        return view('admin.rewardManagements.edit', compact('merchants', 'categories', 'vouchers', 'rewardManagement'));
+        return view('admin.rewardManagements.edit', compact('categories', 'rewardManagement'));
     }
 
     public function update(UpdateRewardManagementRequest $request, RewardManagement $rewardManagement)
@@ -134,7 +123,7 @@ class RewardManagementController extends Controller
     {
         abort_if(Gate::denies('reward_management_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $rewardManagement->load('merchant', 'category', 'voucher');
+        $rewardManagement->load('category');
 
         return view('admin.rewardManagements.show', compact('rewardManagement'));
     }

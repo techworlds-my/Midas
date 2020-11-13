@@ -17,10 +17,6 @@ class UpdateVoucherManagementRequest extends FormRequest
     public function rules()
     {
         return [
-            'merchant_id'    => [
-                'required',
-                'integer',
-            ],
             'vouchercode'    => [
                 'string',
                 'required',
@@ -45,12 +41,6 @@ class UpdateVoucherManagementRequest extends FormRequest
                 'integer',
                 'min:-2147483648',
                 'max:2147483647',
-            ],
-            'items.*'        => [
-                'integer',
-            ],
-            'items'          => [
-                'array',
             ],
             'usage_limit'    => [
                 'nullable',
@@ -81,6 +71,14 @@ class UpdateVoucherManagementRequest extends FormRequest
             'redeem_point'   => [
                 'string',
                 'nullable',
+            ],
+            'merchant'       => [
+                'string',
+                'nullable',
+            ],
+            'item'           => [
+                'string',
+                'required',
             ],
         ];
     }

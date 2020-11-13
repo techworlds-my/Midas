@@ -17,10 +17,6 @@ class UpdateRewardListRequest extends FormRequest
     public function rules()
     {
         return [
-            'reward_id'   => [
-                'required',
-                'integer',
-            ],
             'reward_type' => [
                 'string',
                 'required',
@@ -30,6 +26,14 @@ class UpdateRewardListRequest extends FormRequest
                 'integer',
                 'min:-2147483648',
                 'max:2147483647',
+            ],
+            'username'    => [
+                'string',
+                'nullable',
+            ],
+            'reward'      => [
+                'string',
+                'nullable',
             ],
         ];
     }

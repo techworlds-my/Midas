@@ -19,10 +19,10 @@ class RewardList extends Model
     ];
 
     protected $fillable = [
-        'username_id',
-        'reward_id',
         'reward_type',
         'amount',
+        'username',
+        'reward',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -31,15 +31,5 @@ class RewardList extends Model
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
-    }
-
-    public function username()
-    {
-        return $this->belongsTo(User::class, 'username_id');
-    }
-
-    public function reward()
-    {
-        return $this->belongsTo(RewardManagement::class, 'reward_id');
     }
 }

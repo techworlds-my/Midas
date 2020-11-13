@@ -25,9 +25,6 @@
                         {{ trans('cruds.voucherManagement.fields.id') }}
                     </th>
                     <th>
-                        {{ trans('cruds.voucherManagement.fields.merchant') }}
-                    </th>
-                    <th>
                         {{ trans('cruds.voucherManagement.fields.vouchercode') }}
                     </th>
                     <th>
@@ -52,9 +49,6 @@
                         {{ trans('cruds.itemCateogry.fields.in_enable') }}
                     </th>
                     <th>
-                        {{ trans('cruds.voucherManagement.fields.item') }}
-                    </th>
-                    <th>
                         {{ trans('cruds.voucherManagement.fields.usage_limit') }}
                     </th>
                     <th>
@@ -77,6 +71,12 @@
                     </th>
                     <th>
                         {{ trans('cruds.voucherManagement.fields.redeem_point') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.voucherManagement.fields.merchant') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.voucherManagement.fields.item') }}
                     </th>
                     <th>
                         &nbsp;
@@ -135,7 +135,6 @@
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
-{ data: 'merchant_merchant', name: 'merchant.merchant' },
 { data: 'vouchercode', name: 'vouchercode' },
 { data: 'discount_type', name: 'discount_type' },
 { data: 'value', name: 'value' },
@@ -144,7 +143,6 @@
 { data: 'excluded_sales_item', name: 'excluded_sales_item' },
 { data: 'item_category_category', name: 'item_category.category' },
 { data: 'item_category.in_enable', name: 'item_category.in_enable' },
-{ data: 'item', name: 'items.title' },
 { data: 'usage_limit', name: 'usage_limit' },
 { data: 'limit_item', name: 'limit_item' },
 { data: 'limit_per_user', name: 'limit_per_user' },
@@ -153,6 +151,8 @@
 { data: 'is_free_shipping', name: 'is_free_shipping' },
 { data: 'is_credit_purchase', name: 'is_credit_purchase' },
 { data: 'redeem_point', name: 'redeem_point' },
+{ data: 'merchant', name: 'merchant' },
+{ data: 'item', name: 'item' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

@@ -41,14 +41,6 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.orderManagement.fields.username') }}
-                        </th>
-                        <td>
-                            {{ $orderManagement->username->username ?? '' }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
                             {{ trans('cruds.orderManagement.fields.voucher') }}
                         </th>
                         <td>
@@ -113,6 +105,14 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.orderManagement.fields.transaction') }}
+                        </th>
+                        <td>
+                            {{ $orderManagement->transaction }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.orderManagement.fields.merchant') }}
                         </th>
                         <td>
@@ -121,10 +121,10 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.orderManagement.fields.transaction') }}
+                            {{ trans('cruds.orderManagement.fields.username') }}
                         </th>
                         <td>
-                            {{ $orderManagement->transaction }}
+                            {{ $orderManagement->username }}
                         </td>
                     </tr>
                 </tbody>

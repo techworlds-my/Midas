@@ -25,14 +25,6 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.rewardManagement.fields.merchant') }}
-                        </th>
-                        <td>
-                            {{ $rewardManagement->merchant->merchant ?? '' }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
                             {{ trans('cruds.rewardManagement.fields.category') }}
                         </th>
                         <td>
@@ -100,7 +92,15 @@
                             {{ trans('cruds.rewardManagement.fields.voucher') }}
                         </th>
                         <td>
-                            {{ $rewardManagement->voucher->vouchercode ?? '' }}
+                            {{ $rewardManagement->voucher }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.rewardManagement.fields.merchant') }}
+                        </th>
+                        <td>
+                            {{ $rewardManagement->merchant }}
                         </td>
                     </tr>
                 </tbody>

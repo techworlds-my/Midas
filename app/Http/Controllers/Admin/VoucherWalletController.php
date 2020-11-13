@@ -6,8 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyVoucherWalletRequest;
 use App\Http\Requests\StoreVoucherWalletRequest;
 use App\Http\Requests\UpdateVoucherWalletRequest;
-use App\Models\User;
-use App\Models\VoucherManagement;
 use App\Models\VoucherWallet;
 use Gate;
 use Illuminate\Http\Request;
@@ -21,7 +19,7 @@ class VoucherWalletController extends Controller
         abort_if(Gate::denies('voucher_wallet_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = VoucherWallet::with(['username', 'voucher'])->select(sprintf('%s.*', (new VoucherWallet)->table));
+            $query = VoucherWallet::query()->select(sprintf('%s.*', (new VoucherWallet)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -45,22 +43,20 @@ class VoucherWalletController extends Controller
             $table->editColumn('id', function ($row) {
                 return $row->id ? $row->id : "";
             });
-            $table->addColumn('username_username', function ($row) {
-                return $row->username ? $row->username->username : '';
-            });
-
             $table->editColumn('is_redeem', function ($row) {
                 return '<input type="checkbox" disabled ' . ($row->is_redeem ? 'checked' : null) . '>';
             });
-            $table->addColumn('voucher_vouchercode', function ($row) {
-                return $row->voucher ? $row->voucher->vouchercode : '';
-            });
-
             $table->editColumn('usage', function ($row) {
                 return $row->usage ? $row->usage : "";
             });
+            $table->editColumn('username', function ($row) {
+                return $row->username ? $row->username : "";
+            });
+            $table->editColumn('voucher', function ($row) {
+                return $row->voucher ? $row->voucher : "";
+            });
 
-            $table->rawColumns(['actions', 'placeholder', 'username', 'is_redeem', 'voucher']);
+            $table->rawColumns(['actions', 'placeholder', 'is_redeem']);
 
             return $table->make(true);
         }
@@ -72,11 +68,7 @@ class VoucherWalletController extends Controller
     {
         abort_if(Gate::denies('voucher_wallet_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $usernames = User::all()->pluck('username', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $vouchers = VoucherManagement::all()->pluck('vouchercode', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        return view('admin.voucherWallets.create', compact('usernames', 'vouchers'));
+        return view('admin.voucherWallets.create');
     }
 
     public function store(StoreVoucherWalletRequest $request)
@@ -90,13 +82,7 @@ class VoucherWalletController extends Controller
     {
         abort_if(Gate::denies('voucher_wallet_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $usernames = User::all()->pluck('username', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $vouchers = VoucherManagement::all()->pluck('vouchercode', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $voucherWallet->load('username', 'voucher');
-
-        return view('admin.voucherWallets.edit', compact('usernames', 'vouchers', 'voucherWallet'));
+        return view('admin.voucherWallets.edit', compact('voucherWallet'));
     }
 
     public function update(UpdateVoucherWalletRequest $request, VoucherWallet $voucherWallet)
@@ -109,8 +95,6 @@ class VoucherWalletController extends Controller
     public function show(VoucherWallet $voucherWallet)
     {
         abort_if(Gate::denies('voucher_wallet_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $voucherWallet->load('username', 'voucher');
 
         return view('admin.voucherWallets.show', compact('voucherWallet'));
     }

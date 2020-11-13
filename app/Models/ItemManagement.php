@@ -39,7 +39,7 @@ class ItemManagement extends Model implements HasMedia
         'is_veg',
         'is_halal',
         'created_at',
-        'merchant_id',
+        'merchant',
         'updated_at',
         'deleted_at',
         'created_by_id',
@@ -71,11 +71,6 @@ class ItemManagement extends Model implements HasMedia
         });
 
         return $files;
-    }
-
-    public function merchant()
-    {
-        return $this->belongsTo(MerchantManagement::class, 'merchant_id');
     }
 
     public function created_by()

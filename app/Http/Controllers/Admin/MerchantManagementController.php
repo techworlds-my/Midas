@@ -10,7 +10,6 @@ use App\Models\MerchantCategory;
 use App\Models\MerchantLevel;
 use App\Models\MerchantManagement;
 use App\Models\MerchantSubCategory;
-use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,7 +22,7 @@ class MerchantManagementController extends Controller
         abort_if(Gate::denies('merchant_management_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = MerchantManagement::with(['category', 'sub_cateogry', 'created_by', 'level'])->select(sprintf('%s.*', (new MerchantManagement)->table));
+            $query = MerchantManagement::with(['category', 'sub_cateogry', 'level', 'created_by'])->select(sprintf('%s.*', (new MerchantManagement)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -79,13 +78,6 @@ class MerchantManagementController extends Controller
                 return $row->sub_cateogry ? $row->sub_cateogry->sub_category : '';
             });
 
-            $table->addColumn('created_by_username', function ($row) {
-                return $row->created_by ? $row->created_by->username : '';
-            });
-
-            $table->editColumn('created_by.username', function ($row) {
-                return $row->created_by ? (is_string($row->created_by) ? $row->created_by : $row->created_by->username) : '';
-            });
             $table->editColumn('website', function ($row) {
                 return $row->website ? $row->website : "";
             });
@@ -109,7 +101,7 @@ class MerchantManagementController extends Controller
                 return $row->merchant_manager ? $row->merchant_manager : "";
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'category', 'sub_cateogry', 'created_by', 'level']);
+            $table->rawColumns(['actions', 'placeholder', 'category', 'sub_cateogry', 'level']);
 
             return $table->make(true);
         }
@@ -125,11 +117,9 @@ class MerchantManagementController extends Controller
 
         $sub_cateogries = MerchantSubCategory::all()->pluck('sub_category', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $created_bies = User::all()->pluck('username', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $levels = MerchantLevel::all()->pluck('level', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.merchantManagements.create', compact('categories', 'sub_cateogries', 'created_bies', 'levels'));
+        return view('admin.merchantManagements.create', compact('categories', 'sub_cateogries', 'levels'));
     }
 
     public function store(StoreMerchantManagementRequest $request)
@@ -147,13 +137,11 @@ class MerchantManagementController extends Controller
 
         $sub_cateogries = MerchantSubCategory::all()->pluck('sub_category', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $created_bies = User::all()->pluck('username', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $levels = MerchantLevel::all()->pluck('level', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $merchantManagement->load('category', 'sub_cateogry', 'created_by', 'level');
+        $merchantManagement->load('category', 'sub_cateogry', 'level', 'created_by');
 
-        return view('admin.merchantManagements.edit', compact('categories', 'sub_cateogries', 'created_bies', 'levels', 'merchantManagement'));
+        return view('admin.merchantManagements.edit', compact('categories', 'sub_cateogries', 'levels', 'merchantManagement'));
     }
 
     public function update(UpdateMerchantManagementRequest $request, MerchantManagement $merchantManagement)
@@ -167,7 +155,7 @@ class MerchantManagementController extends Controller
     {
         abort_if(Gate::denies('merchant_management_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $merchantManagement->load('category', 'sub_cateogry', 'created_by', 'level');
+        $merchantManagement->load('category', 'sub_cateogry', 'level', 'created_by');
 
         return view('admin.merchantManagements.show', compact('merchantManagement'));
     }

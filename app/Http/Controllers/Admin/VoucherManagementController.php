@@ -7,8 +7,6 @@ use App\Http\Requests\MassDestroyVoucherManagementRequest;
 use App\Http\Requests\StoreVoucherManagementRequest;
 use App\Http\Requests\UpdateVoucherManagementRequest;
 use App\Models\ItemCateogry;
-use App\Models\ItemManagement;
-use App\Models\MerchantManagement;
 use App\Models\VoucherManagement;
 use Gate;
 use Illuminate\Http\Request;
@@ -22,7 +20,7 @@ class VoucherManagementController extends Controller
         abort_if(Gate::denies('voucher_management_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = VoucherManagement::with(['merchant', 'item_category', 'items'])->select(sprintf('%s.*', (new VoucherManagement)->table));
+            $query = VoucherManagement::with(['item_category'])->select(sprintf('%s.*', (new VoucherManagement)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -46,10 +44,6 @@ class VoucherManagementController extends Controller
             $table->editColumn('id', function ($row) {
                 return $row->id ? $row->id : "";
             });
-            $table->addColumn('merchant_merchant', function ($row) {
-                return $row->merchant ? $row->merchant->merchant : '';
-            });
-
             $table->editColumn('vouchercode', function ($row) {
                 return $row->vouchercode ? $row->vouchercode : "";
             });
@@ -75,15 +69,6 @@ class VoucherManagementController extends Controller
             $table->editColumn('item_category.in_enable', function ($row) {
                 return $row->item_category ? (is_string($row->item_category) ? $row->item_category : $row->item_category->in_enable) : '';
             });
-            $table->editColumn('item', function ($row) {
-                $labels = [];
-
-                foreach ($row->items as $item) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $item->title);
-                }
-
-                return implode(' ', $labels);
-            });
             $table->editColumn('usage_limit', function ($row) {
                 return $row->usage_limit ? $row->usage_limit : "";
             });
@@ -106,8 +91,14 @@ class VoucherManagementController extends Controller
             $table->editColumn('redeem_point', function ($row) {
                 return $row->redeem_point ? $row->redeem_point : "";
             });
+            $table->editColumn('merchant', function ($row) {
+                return $row->merchant ? $row->merchant : "";
+            });
+            $table->editColumn('item', function ($row) {
+                return $row->item ? $row->item : "";
+            });
 
-            $table->rawColumns(['actions', 'placeholder', 'merchant', 'excluded_sales_item', 'item_category', 'item', 'is_free_shipping', 'is_credit_purchase']);
+            $table->rawColumns(['actions', 'placeholder', 'excluded_sales_item', 'item_category', 'is_free_shipping', 'is_credit_purchase']);
 
             return $table->make(true);
         }
@@ -119,19 +110,14 @@ class VoucherManagementController extends Controller
     {
         abort_if(Gate::denies('voucher_management_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $merchants = MerchantManagement::all()->pluck('merchant', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $item_categories = ItemCateogry::all()->pluck('category', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $items = ItemManagement::all()->pluck('title', 'id');
-
-        return view('admin.voucherManagements.create', compact('merchants', 'item_categories', 'items'));
+        return view('admin.voucherManagements.create', compact('item_categories'));
     }
 
     public function store(StoreVoucherManagementRequest $request)
     {
         $voucherManagement = VoucherManagement::create($request->all());
-        $voucherManagement->items()->sync($request->input('items', []));
 
         return redirect()->route('admin.voucher-managements.index');
     }
@@ -140,21 +126,16 @@ class VoucherManagementController extends Controller
     {
         abort_if(Gate::denies('voucher_management_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $merchants = MerchantManagement::all()->pluck('merchant', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $item_categories = ItemCateogry::all()->pluck('category', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $items = ItemManagement::all()->pluck('title', 'id');
+        $voucherManagement->load('item_category');
 
-        $voucherManagement->load('merchant', 'item_category', 'items');
-
-        return view('admin.voucherManagements.edit', compact('merchants', 'item_categories', 'items', 'voucherManagement'));
+        return view('admin.voucherManagements.edit', compact('item_categories', 'voucherManagement'));
     }
 
     public function update(UpdateVoucherManagementRequest $request, VoucherManagement $voucherManagement)
     {
         $voucherManagement->update($request->all());
-        $voucherManagement->items()->sync($request->input('items', []));
 
         return redirect()->route('admin.voucher-managements.index');
     }
@@ -163,7 +144,7 @@ class VoucherManagementController extends Controller
     {
         abort_if(Gate::denies('voucher_management_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $voucherManagement->load('merchant', 'item_category', 'items');
+        $voucherManagement->load('item_category');
 
         return view('admin.voucherManagements.show', compact('voucherManagement'));
     }

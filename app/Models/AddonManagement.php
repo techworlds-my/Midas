@@ -23,7 +23,7 @@ class AddonManagement extends Model
         'title',
         'price',
         'is_enable',
-        'item_id',
+        'item',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -37,10 +37,5 @@ class AddonManagement extends Model
     public function category()
     {
         return $this->belongsTo(AddOnCategory::class, 'category_id');
-    }
-
-    public function item()
-    {
-        return $this->belongsTo(ItemManagement::class, 'item_id');
     }
 }

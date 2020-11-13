@@ -17,7 +17,7 @@ class RewardListApiController extends Controller
     {
         abort_if(Gate::denies('reward_list_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new RewardListResource(RewardList::with(['username', 'reward'])->get());
+        return new RewardListResource(RewardList::all());
     }
 
     public function store(StoreRewardListRequest $request)
@@ -33,7 +33,7 @@ class RewardListApiController extends Controller
     {
         abort_if(Gate::denies('reward_list_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new RewardListResource($rewardList->load(['username', 'reward']));
+        return new RewardListResource($rewardList);
     }
 
     public function update(UpdateRewardListRequest $request, RewardList $rewardList)

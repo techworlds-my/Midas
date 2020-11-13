@@ -17,13 +17,12 @@ class VoucherManagementApiController extends Controller
     {
         abort_if(Gate::denies('voucher_management_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new VoucherManagementResource(VoucherManagement::with(['merchant', 'item_category', 'items'])->get());
+        return new VoucherManagementResource(VoucherManagement::with(['item_category'])->get());
     }
 
     public function store(StoreVoucherManagementRequest $request)
     {
         $voucherManagement = VoucherManagement::create($request->all());
-        $voucherManagement->items()->sync($request->input('items', []));
 
         return (new VoucherManagementResource($voucherManagement))
             ->response()
@@ -34,13 +33,12 @@ class VoucherManagementApiController extends Controller
     {
         abort_if(Gate::denies('voucher_management_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new VoucherManagementResource($voucherManagement->load(['merchant', 'item_category', 'items']));
+        return new VoucherManagementResource($voucherManagement->load(['item_category']));
     }
 
     public function update(UpdateVoucherManagementRequest $request, VoucherManagement $voucherManagement)
     {
         $voucherManagement->update($request->all());
-        $voucherManagement->items()->sync($request->input('items', []));
 
         return (new VoucherManagementResource($voucherManagement))
             ->response()

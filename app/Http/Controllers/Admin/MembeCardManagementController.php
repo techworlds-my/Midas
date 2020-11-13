@@ -7,7 +7,6 @@ use App\Http\Requests\MassDestroyMembeCardManagementRequest;
 use App\Http\Requests\StoreMembeCardManagementRequest;
 use App\Http\Requests\UpdateMembeCardManagementRequest;
 use App\Models\MembeCardManagement;
-use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,7 +19,7 @@ class MembeCardManagementController extends Controller
         abort_if(Gate::denies('membe_card_management_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = MembeCardManagement::with(['user_name'])->select(sprintf('%s.*', (new MembeCardManagement)->table));
+            $query = MembeCardManagement::query()->select(sprintf('%s.*', (new MembeCardManagement)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -50,11 +49,11 @@ class MembeCardManagementController extends Controller
             $table->editColumn('card_no', function ($row) {
                 return $row->card_no ? $row->card_no : "";
             });
-            $table->addColumn('user_name_username', function ($row) {
-                return $row->user_name ? $row->user_name->username : '';
+            $table->editColumn('username', function ($row) {
+                return $row->username ? $row->username : "";
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'user_name']);
+            $table->rawColumns(['actions', 'placeholder']);
 
             return $table->make(true);
         }
@@ -66,9 +65,7 @@ class MembeCardManagementController extends Controller
     {
         abort_if(Gate::denies('membe_card_management_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $user_names = User::all()->pluck('username', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        return view('admin.membeCardManagements.create', compact('user_names'));
+        return view('admin.membeCardManagements.create');
     }
 
     public function store(StoreMembeCardManagementRequest $request)
@@ -82,11 +79,7 @@ class MembeCardManagementController extends Controller
     {
         abort_if(Gate::denies('membe_card_management_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $user_names = User::all()->pluck('username', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $membeCardManagement->load('user_name');
-
-        return view('admin.membeCardManagements.edit', compact('user_names', 'membeCardManagement'));
+        return view('admin.membeCardManagements.edit', compact('membeCardManagement'));
     }
 
     public function update(UpdateMembeCardManagementRequest $request, MembeCardManagement $membeCardManagement)
@@ -99,8 +92,6 @@ class MembeCardManagementController extends Controller
     public function show(MembeCardManagement $membeCardManagement)
     {
         abort_if(Gate::denies('membe_card_management_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $membeCardManagement->load('user_name');
 
         return view('admin.membeCardManagements.show', compact('membeCardManagement'));
     }

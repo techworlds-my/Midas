@@ -119,20 +119,6 @@
                 <span class="help-block">{{ trans('cruds.merchantManagement.fields.sub_cateogry_helper') }}</span>
             </div>
             <div class="form-group">
-                <label class="required" for="created_by_id">{{ trans('cruds.merchantManagement.fields.created_by') }}</label>
-                <select class="form-control select2 {{ $errors->has('created_by') ? 'is-invalid' : '' }}" name="created_by_id" id="created_by_id" required>
-                    @foreach($created_bies as $id => $created_by)
-                        <option value="{{ $id }}" {{ (old('created_by_id') ? old('created_by_id') : $merchantManagement->created_by->id ?? '') == $id ? 'selected' : '' }}>{{ $created_by }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('created_by'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('created_by') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.merchantManagement.fields.created_by_helper') }}</span>
-            </div>
-            <div class="form-group">
                 <label for="website">{{ trans('cruds.merchantManagement.fields.website') }}</label>
                 <input class="form-control {{ $errors->has('website') ? 'is-invalid' : '' }}" type="text" name="website" id="website" value="{{ old('website', $merchantManagement->website) }}">
                 @if($errors->has('website'))

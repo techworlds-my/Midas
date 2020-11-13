@@ -31,18 +31,14 @@
                 <span class="help-block">{{ trans('cruds.membeCardManagement.fields.card_no_helper') }}</span>
             </div>
             <div class="form-group">
-                <label class="required" for="user_name_id">{{ trans('cruds.membeCardManagement.fields.user_name') }}</label>
-                <select class="form-control select2 {{ $errors->has('user_name') ? 'is-invalid' : '' }}" name="user_name_id" id="user_name_id" required>
-                    @foreach($user_names as $id => $user_name)
-                        <option value="{{ $id }}" {{ (old('user_name_id') ? old('user_name_id') : $membeCardManagement->user_name->id ?? '') == $id ? 'selected' : '' }}>{{ $user_name }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('user_name'))
+                <label class="required" for="username">{{ trans('cruds.membeCardManagement.fields.username') }}</label>
+                <input class="form-control {{ $errors->has('username') ? 'is-invalid' : '' }}" type="text" name="username" id="username" value="{{ old('username', $membeCardManagement->username) }}" required>
+                @if($errors->has('username'))
                     <div class="invalid-feedback">
-                        {{ $errors->first('user_name') }}
+                        {{ $errors->first('username') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.membeCardManagement.fields.user_name_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.membeCardManagement.fields.username_helper') }}</span>
             </div>
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">

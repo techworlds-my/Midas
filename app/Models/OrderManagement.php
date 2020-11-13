@@ -21,7 +21,6 @@ class OrderManagement extends Model
     protected $fillable = [
         'order',
         'status_id',
-        'username_id',
         'voucher',
         'address',
         'price',
@@ -30,8 +29,9 @@ class OrderManagement extends Model
         'total',
         'paymentmethod_id',
         'comment',
-        'merchant',
         'transaction',
+        'merchant',
+        'username',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -45,11 +45,6 @@ class OrderManagement extends Model
     public function status()
     {
         return $this->belongsTo(OrderStatus::class, 'status_id');
-    }
-
-    public function username()
-    {
-        return $this->belongsTo(User::class, 'username_id');
     }
 
     public function paymentmethod()

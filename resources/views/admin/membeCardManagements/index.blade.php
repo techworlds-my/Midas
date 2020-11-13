@@ -31,7 +31,7 @@
                         {{ trans('cruds.membeCardManagement.fields.card_no') }}
                     </th>
                     <th>
-                        {{ trans('cruds.membeCardManagement.fields.user_name') }}
+                        {{ trans('cruds.membeCardManagement.fields.username') }}
                     </th>
                     <th>
                         &nbsp;
@@ -92,7 +92,7 @@
 { data: 'id', name: 'id' },
 { data: 'company', name: 'company' },
 { data: 'card_no', name: 'card_no' },
-{ data: 'user_name_username', name: 'user_name.username' },
+{ data: 'username', name: 'username' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

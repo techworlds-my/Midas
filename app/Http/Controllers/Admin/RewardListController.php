@@ -7,8 +7,6 @@ use App\Http\Requests\MassDestroyRewardListRequest;
 use App\Http\Requests\StoreRewardListRequest;
 use App\Http\Requests\UpdateRewardListRequest;
 use App\Models\RewardList;
-use App\Models\RewardManagement;
-use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,7 +19,7 @@ class RewardListController extends Controller
         abort_if(Gate::denies('reward_list_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = RewardList::with(['username', 'reward'])->select(sprintf('%s.*', (new RewardList)->table));
+            $query = RewardList::query()->select(sprintf('%s.*', (new RewardList)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -45,22 +43,20 @@ class RewardListController extends Controller
             $table->editColumn('id', function ($row) {
                 return $row->id ? $row->id : "";
             });
-            $table->addColumn('username_username', function ($row) {
-                return $row->username ? $row->username->username : '';
-            });
-
-            $table->addColumn('reward_title', function ($row) {
-                return $row->reward ? $row->reward->title : '';
-            });
-
             $table->editColumn('reward_type', function ($row) {
                 return $row->reward_type ? $row->reward_type : "";
             });
             $table->editColumn('amount', function ($row) {
                 return $row->amount ? $row->amount : "";
             });
+            $table->editColumn('username', function ($row) {
+                return $row->username ? $row->username : "";
+            });
+            $table->editColumn('reward', function ($row) {
+                return $row->reward ? $row->reward : "";
+            });
 
-            $table->rawColumns(['actions', 'placeholder', 'username', 'reward']);
+            $table->rawColumns(['actions', 'placeholder']);
 
             return $table->make(true);
         }
@@ -72,11 +68,7 @@ class RewardListController extends Controller
     {
         abort_if(Gate::denies('reward_list_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $usernames = User::all()->pluck('username', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $rewards = RewardManagement::all()->pluck('title', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        return view('admin.rewardLists.create', compact('usernames', 'rewards'));
+        return view('admin.rewardLists.create');
     }
 
     public function store(StoreRewardListRequest $request)
@@ -90,13 +82,7 @@ class RewardListController extends Controller
     {
         abort_if(Gate::denies('reward_list_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $usernames = User::all()->pluck('username', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $rewards = RewardManagement::all()->pluck('title', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $rewardList->load('username', 'reward');
-
-        return view('admin.rewardLists.edit', compact('usernames', 'rewards', 'rewardList'));
+        return view('admin.rewardLists.edit', compact('rewardList'));
     }
 
     public function update(UpdateRewardListRequest $request, RewardList $rewardList)
@@ -109,8 +95,6 @@ class RewardListController extends Controller
     public function show(RewardList $rewardList)
     {
         abort_if(Gate::denies('reward_list_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $rewardList->load('username', 'reward');
 
         return view('admin.rewardLists.show', compact('rewardList'));
     }
