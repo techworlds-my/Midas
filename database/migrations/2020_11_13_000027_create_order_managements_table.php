@@ -18,8 +18,9 @@ class CreateOrderManagementsTable extends Migration
             $table->string('tax')->nullable();
             $table->decimal('total', 15, 2)->nullable();
             $table->string('comment')->nullable();
-            $table->string('merchant');
             $table->string('transaction')->nullable();
+            $table->string('merchant');
+            $table->string('username');
             $table->timestamps();
             $table->softDeletes();
         });

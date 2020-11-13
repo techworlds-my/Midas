@@ -11,20 +11,6 @@
             @method('PUT')
             @csrf
             <div class="form-group">
-                <label class="required" for="merchant_id">{{ trans('cruds.voucherManagement.fields.merchant') }}</label>
-                <select class="form-control select2 {{ $errors->has('merchant') ? 'is-invalid' : '' }}" name="merchant_id" id="merchant_id" required>
-                    @foreach($merchants as $id => $merchant)
-                        <option value="{{ $id }}" {{ (old('merchant_id') ? old('merchant_id') : $voucherManagement->merchant->id ?? '') == $id ? 'selected' : '' }}>{{ $merchant }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('merchant'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('merchant') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.voucherManagement.fields.merchant_helper') }}</span>
-            </div>
-            <div class="form-group">
                 <label class="required" for="vouchercode">{{ trans('cruds.voucherManagement.fields.vouchercode') }}</label>
                 <input class="form-control {{ $errors->has('vouchercode') ? 'is-invalid' : '' }}" type="text" name="vouchercode" id="vouchercode" value="{{ old('vouchercode', $voucherManagement->vouchercode) }}" required>
                 @if($errors->has('vouchercode'))
@@ -105,24 +91,6 @@
                     </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.voucherManagement.fields.item_category_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="items">{{ trans('cruds.voucherManagement.fields.item') }}</label>
-                <div style="padding-bottom: 4px">
-                    <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
-                    <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                </div>
-                <select class="form-control select2 {{ $errors->has('items') ? 'is-invalid' : '' }}" name="items[]" id="items" multiple>
-                    @foreach($items as $id => $item)
-                        <option value="{{ $id }}" {{ (in_array($id, old('items', [])) || $voucherManagement->items->contains($id)) ? 'selected' : '' }}>{{ $item }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('items'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('items') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.voucherManagement.fields.item_helper') }}</span>
             </div>
             <div class="form-group">
                 <label for="usage_limit">{{ trans('cruds.voucherManagement.fields.usage_limit') }}</label>
@@ -209,6 +177,26 @@
                     </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.voucherManagement.fields.redeem_point_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="merchant">{{ trans('cruds.voucherManagement.fields.merchant') }}</label>
+                <input class="form-control {{ $errors->has('merchant') ? 'is-invalid' : '' }}" type="text" name="merchant" id="merchant" value="{{ old('merchant', $voucherManagement->merchant) }}">
+                @if($errors->has('merchant'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('merchant') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.voucherManagement.fields.merchant_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label class="required" for="item">{{ trans('cruds.voucherManagement.fields.item') }}</label>
+                <input class="form-control {{ $errors->has('item') ? 'is-invalid' : '' }}" type="text" name="item" id="item" value="{{ old('item', $voucherManagement->item) }}" required>
+                @if($errors->has('item'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('item') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.voucherManagement.fields.item_helper') }}</span>
             </div>
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">

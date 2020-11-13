@@ -60,7 +60,7 @@
                             {{ trans('cruds.addonManagement.fields.item') }}
                         </th>
                         <td>
-                            {{ $addonManagement->item->title ?? '' }}
+                            {{ $addonManagement->item }}
                         </td>
                     </tr>
                 </tbody>

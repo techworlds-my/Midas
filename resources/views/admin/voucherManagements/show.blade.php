@@ -25,14 +25,6 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.voucherManagement.fields.merchant') }}
-                        </th>
-                        <td>
-                            {{ $voucherManagement->merchant->merchant ?? '' }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
                             {{ trans('cruds.voucherManagement.fields.vouchercode') }}
                         </th>
                         <td>
@@ -85,16 +77,6 @@
                         </th>
                         <td>
                             {{ $voucherManagement->item_category->category ?? '' }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.voucherManagement.fields.item') }}
-                        </th>
-                        <td>
-                            @foreach($voucherManagement->items as $key => $item)
-                                <span class="label label-info">{{ $item->title }}</span>
-                            @endforeach
                         </td>
                     </tr>
                     <tr>
@@ -159,6 +141,22 @@
                         </th>
                         <td>
                             {{ $voucherManagement->redeem_point }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.voucherManagement.fields.merchant') }}
+                        </th>
+                        <td>
+                            {{ $voucherManagement->merchant }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.voucherManagement.fields.item') }}
+                        </th>
+                        <td>
+                            {{ $voucherManagement->item }}
                         </td>
                     </tr>
                 </tbody>

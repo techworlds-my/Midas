@@ -25,10 +25,6 @@ class UpdateOrderManagementRequest extends FormRequest
                 'required',
                 'integer',
             ],
-            'username_id'      => [
-                'required',
-                'integer',
-            ],
             'voucher'          => [
                 'string',
                 'nullable',
@@ -52,13 +48,17 @@ class UpdateOrderManagementRequest extends FormRequest
                 'string',
                 'nullable',
             ],
+            'transaction'      => [
+                'string',
+                'nullable',
+            ],
             'merchant'         => [
                 'string',
                 'required',
             ],
-            'transaction'      => [
+            'username'         => [
                 'string',
-                'nullable',
+                'required',
             ],
         ];
     }

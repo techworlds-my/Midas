@@ -11,8 +11,6 @@ class AddRelationshipFieldsToAddonManagementsTable extends Migration
         Schema::table('addon_managements', function (Blueprint $table) {
             $table->unsignedInteger('category_id');
             $table->foreign('category_id', 'category_fk_2562670')->references('id')->on('add_on_categories');
-            $table->unsignedInteger('item_id');
-            $table->foreign('item_id', 'item_fk_2562674')->references('id')->on('item_managements');
         });
     }
 }

@@ -25,14 +25,6 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.voucherWallet.fields.username') }}
-                        </th>
-                        <td>
-                            {{ $voucherWallet->username->username ?? '' }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
                             {{ trans('cruds.voucherWallet.fields.is_redeem') }}
                         </th>
                         <td>
@@ -41,18 +33,26 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.voucherWallet.fields.voucher') }}
-                        </th>
-                        <td>
-                            {{ $voucherWallet->voucher->vouchercode ?? '' }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
                             {{ trans('cruds.voucherWallet.fields.usage') }}
                         </th>
                         <td>
                             {{ $voucherWallet->usage }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.voucherWallet.fields.username') }}
+                        </th>
+                        <td>
+                            {{ $voucherWallet->username }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.voucherWallet.fields.voucher') }}
+                        </th>
+                        <td>
+                            {{ $voucherWallet->voucher }}
                         </td>
                     </tr>
                 </tbody>

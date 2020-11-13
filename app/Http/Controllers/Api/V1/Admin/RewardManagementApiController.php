@@ -17,7 +17,7 @@ class RewardManagementApiController extends Controller
     {
         abort_if(Gate::denies('reward_management_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new RewardManagementResource(RewardManagement::with(['merchant', 'category', 'voucher'])->get());
+        return new RewardManagementResource(RewardManagement::with(['category'])->get());
     }
 
     public function store(StoreRewardManagementRequest $request)
@@ -33,7 +33,7 @@ class RewardManagementApiController extends Controller
     {
         abort_if(Gate::denies('reward_management_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new RewardManagementResource($rewardManagement->load(['merchant', 'category', 'voucher']));
+        return new RewardManagementResource($rewardManagement->load(['category']));
     }
 
     public function update(UpdateRewardManagementRequest $request, RewardManagement $rewardManagement)

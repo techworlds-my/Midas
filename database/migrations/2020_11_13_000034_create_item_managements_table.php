@@ -20,6 +20,7 @@ class CreateItemManagementsTable extends Migration
             $table->boolean('is_active')->default(0);
             $table->boolean('is_veg')->default(0);
             $table->boolean('is_halal')->default(0);
+            $table->string('merchant');
             $table->timestamps();
             $table->softDeletes();
         });

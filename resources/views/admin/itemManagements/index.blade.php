@@ -136,7 +136,7 @@
 { data: 'is_active', name: 'is_active' },
 { data: 'is_veg', name: 'is_veg' },
 { data: 'is_halal', name: 'is_halal' },
-{ data: 'merchant_merchant', name: 'merchant.merchant' },
+{ data: 'merchant', name: 'merchant' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

@@ -19,10 +19,10 @@ class VoucherWallet extends Model
     ];
 
     protected $fillable = [
-        'username_id',
         'is_redeem',
-        'voucher_id',
         'usage',
+        'username',
+        'voucher',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -31,15 +31,5 @@ class VoucherWallet extends Model
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
-    }
-
-    public function username()
-    {
-        return $this->belongsTo(User::class, 'username_id');
-    }
-
-    public function voucher()
-    {
-        return $this->belongsTo(VoucherManagement::class, 'voucher_id');
     }
 }

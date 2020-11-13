@@ -9,7 +9,6 @@ use App\Http\Requests\UpdateOrderManagementRequest;
 use App\Models\OrderManagement;
 use App\Models\OrderStatus;
 use App\Models\PaymentMethod;
-use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,7 +21,7 @@ class OrderManagementController extends Controller
         abort_if(Gate::denies('order_management_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = OrderManagement::with(['status', 'username', 'paymentmethod'])->select(sprintf('%s.*', (new OrderManagement)->table));
+            $query = OrderManagement::with(['status', 'paymentmethod'])->select(sprintf('%s.*', (new OrderManagement)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -56,10 +55,6 @@ class OrderManagementController extends Controller
             $table->editColumn('status.in_enable', function ($row) {
                 return $row->status ? (is_string($row->status) ? $row->status : $row->status->in_enable) : '';
             });
-            $table->addColumn('username_username', function ($row) {
-                return $row->username ? $row->username->username : '';
-            });
-
             $table->editColumn('voucher', function ($row) {
                 return $row->voucher ? $row->voucher : "";
             });
@@ -88,14 +83,17 @@ class OrderManagementController extends Controller
             $table->editColumn('comment', function ($row) {
                 return $row->comment ? $row->comment : "";
             });
-            $table->editColumn('merchant', function ($row) {
-                return $row->merchant ? $row->merchant : "";
-            });
             $table->editColumn('transaction', function ($row) {
                 return $row->transaction ? $row->transaction : "";
             });
+            $table->editColumn('merchant', function ($row) {
+                return $row->merchant ? $row->merchant : "";
+            });
+            $table->editColumn('username', function ($row) {
+                return $row->username ? $row->username : "";
+            });
 
-            $table->rawColumns(['actions', 'placeholder', 'status', 'username', 'paymentmethod']);
+            $table->rawColumns(['actions', 'placeholder', 'status', 'paymentmethod']);
 
             return $table->make(true);
         }
@@ -109,11 +107,9 @@ class OrderManagementController extends Controller
 
         $statuses = OrderStatus::all()->pluck('status', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $usernames = User::all()->pluck('username', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $paymentmethods = PaymentMethod::all()->pluck('method', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.orderManagements.create', compact('statuses', 'usernames', 'paymentmethods'));
+        return view('admin.orderManagements.create', compact('statuses', 'paymentmethods'));
     }
 
     public function store(StoreOrderManagementRequest $request)
@@ -129,13 +125,11 @@ class OrderManagementController extends Controller
 
         $statuses = OrderStatus::all()->pluck('status', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $usernames = User::all()->pluck('username', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $paymentmethods = PaymentMethod::all()->pluck('method', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $orderManagement->load('status', 'username', 'paymentmethod');
+        $orderManagement->load('status', 'paymentmethod');
 
-        return view('admin.orderManagements.edit', compact('statuses', 'usernames', 'paymentmethods', 'orderManagement'));
+        return view('admin.orderManagements.edit', compact('statuses', 'paymentmethods', 'orderManagement'));
     }
 
     public function update(UpdateOrderManagementRequest $request, OrderManagement $orderManagement)
@@ -149,7 +143,7 @@ class OrderManagementController extends Controller
     {
         abort_if(Gate::denies('order_management_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $orderManagement->load('status', 'username', 'paymentmethod');
+        $orderManagement->load('status', 'paymentmethod');
 
         return view('admin.orderManagements.show', compact('orderManagement'));
     }

@@ -41,10 +41,10 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.membeCardManagement.fields.user_name') }}
+                            {{ trans('cruds.membeCardManagement.fields.username') }}
                         </th>
                         <td>
-                            {{ $membeCardManagement->user_name->username ?? '' }}
+                            {{ $membeCardManagement->username }}
                         </td>
                     </tr>
                 </tbody>

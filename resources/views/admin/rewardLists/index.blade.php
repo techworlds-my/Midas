@@ -25,16 +25,16 @@
                         {{ trans('cruds.rewardList.fields.id') }}
                     </th>
                     <th>
-                        {{ trans('cruds.rewardList.fields.username') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.rewardList.fields.reward') }}
-                    </th>
-                    <th>
                         {{ trans('cruds.rewardList.fields.reward_type') }}
                     </th>
                     <th>
                         {{ trans('cruds.rewardList.fields.amount') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.rewardList.fields.username') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.rewardList.fields.reward') }}
                     </th>
                     <th>
                         &nbsp;
@@ -93,10 +93,10 @@
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
-{ data: 'username_username', name: 'username.username' },
-{ data: 'reward_title', name: 'reward.title' },
 { data: 'reward_type', name: 'reward_type' },
 { data: 'amount', name: 'amount' },
+{ data: 'username', name: 'username' },
+{ data: 'reward', name: 'reward' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

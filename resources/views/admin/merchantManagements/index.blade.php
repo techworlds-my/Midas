@@ -55,12 +55,6 @@
                         {{ trans('cruds.merchantManagement.fields.sub_cateogry') }}
                     </th>
                     <th>
-                        {{ trans('cruds.merchantManagement.fields.created_by') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.user.fields.username') }}
-                    </th>
-                    <th>
                         {{ trans('cruds.merchantManagement.fields.website') }}
                     </th>
                     <th>
@@ -148,8 +142,6 @@
 { data: 'position', name: 'position' },
 { data: 'category_cateogry', name: 'category.cateogry' },
 { data: 'sub_cateogry_sub_category', name: 'sub_cateogry.sub_category' },
-{ data: 'created_by_username', name: 'created_by.username' },
-{ data: 'created_by.username', name: 'created_by.username' },
 { data: 'website', name: 'website' },
 { data: 'facebook', name: 'facebook' },
 { data: 'instagram', name: 'instagram' },

@@ -25,22 +25,6 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.rewardList.fields.username') }}
-                        </th>
-                        <td>
-                            {{ $rewardList->username->username ?? '' }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.rewardList.fields.reward') }}
-                        </th>
-                        <td>
-                            {{ $rewardList->reward->title ?? '' }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
                             {{ trans('cruds.rewardList.fields.reward_type') }}
                         </th>
                         <td>
@@ -53,6 +37,22 @@
                         </th>
                         <td>
                             {{ $rewardList->amount }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.rewardList.fields.username') }}
+                        </th>
+                        <td>
+                            {{ $rewardList->username }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.rewardList.fields.reward') }}
+                        </th>
+                        <td>
+                            {{ $rewardList->reward }}
                         </td>
                     </tr>
                 </tbody>

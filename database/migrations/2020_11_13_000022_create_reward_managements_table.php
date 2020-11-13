@@ -17,6 +17,8 @@ class CreateRewardManagementsTable extends Migration
             $table->string('referral_amount')->nullable();
             $table->integer('bonus')->nullable();
             $table->string('point')->nullable();
+            $table->string('voucher')->nullable();
+            $table->string('merchant')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

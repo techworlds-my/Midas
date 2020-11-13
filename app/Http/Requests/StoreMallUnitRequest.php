@@ -17,23 +17,27 @@ class StoreMallUnitRequest extends FormRequest
     public function rules()
     {
         return [
-            'unit_no' => [
+            'unit_no'  => [
                 'string',
                 'required',
             ],
-            'floor'   => [
+            'floor'    => [
                 'string',
                 'required',
             ],
-            'size'    => [
+            'size'     => [
                 'string',
                 'required',
             ],
-            'status'  => [
+            'status'   => [
                 'string',
                 'required',
             ],
-            'rental'  => [
+            'rental'   => [
+                'string',
+                'required',
+            ],
+            'merchant' => [
                 'string',
                 'required',
             ],

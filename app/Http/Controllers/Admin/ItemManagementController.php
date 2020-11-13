@@ -9,7 +9,6 @@ use App\Http\Requests\StoreItemManagementRequest;
 use App\Http\Requests\UpdateItemManagementRequest;
 use App\Models\ItemCateogry;
 use App\Models\ItemManagement;
-use App\Models\MerchantManagement;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\Models\Media;
@@ -25,7 +24,7 @@ class ItemManagementController extends Controller
         abort_if(Gate::denies('item_management_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = ItemManagement::with(['category', 'merchant', 'created_by'])->select(sprintf('%s.*', (new ItemManagement)->table));
+            $query = ItemManagement::with(['category', 'created_by'])->select(sprintf('%s.*', (new ItemManagement)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -99,11 +98,11 @@ class ItemManagementController extends Controller
             $table->editColumn('is_halal', function ($row) {
                 return '<input type="checkbox" disabled ' . ($row->is_halal ? 'checked' : null) . '>';
             });
-            $table->addColumn('merchant_merchant', function ($row) {
-                return $row->merchant ? $row->merchant->merchant : '';
+            $table->editColumn('merchant', function ($row) {
+                return $row->merchant ? $row->merchant : "";
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'category', 'image', 'is_recommended', 'is_popular', 'is_new', 'is_active', 'is_veg', 'is_halal', 'merchant']);
+            $table->rawColumns(['actions', 'placeholder', 'category', 'image', 'is_recommended', 'is_popular', 'is_new', 'is_active', 'is_veg', 'is_halal']);
 
             return $table->make(true);
         }
@@ -117,9 +116,7 @@ class ItemManagementController extends Controller
 
         $categories = ItemCateogry::all()->pluck('category', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $merchants = MerchantManagement::all()->pluck('merchant', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        return view('admin.itemManagements.create', compact('categories', 'merchants'));
+        return view('admin.itemManagements.create', compact('categories'));
     }
 
     public function store(StoreItemManagementRequest $request)
@@ -143,11 +140,9 @@ class ItemManagementController extends Controller
 
         $categories = ItemCateogry::all()->pluck('category', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $merchants = MerchantManagement::all()->pluck('merchant', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $itemManagement->load('category', 'created_by');
 
-        $itemManagement->load('category', 'merchant', 'created_by');
-
-        return view('admin.itemManagements.edit', compact('categories', 'merchants', 'itemManagement'));
+        return view('admin.itemManagements.edit', compact('categories', 'itemManagement'));
     }
 
     public function update(UpdateItemManagementRequest $request, ItemManagement $itemManagement)
@@ -177,7 +172,7 @@ class ItemManagementController extends Controller
     {
         abort_if(Gate::denies('item_management_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $itemManagement->load('category', 'merchant', 'created_by');
+        $itemManagement->load('category', 'created_by');
 
         return view('admin.itemManagements.show', compact('itemManagement'));
     }

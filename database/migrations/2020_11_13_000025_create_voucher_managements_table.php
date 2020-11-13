@@ -24,6 +24,8 @@ class CreateVoucherManagementsTable extends Migration
             $table->boolean('is_free_shipping')->default(0)->nullable();
             $table->boolean('is_credit_purchase')->default(0)->nullable();
             $table->string('redeem_point')->nullable();
+            $table->string('merchant')->nullable();
+            $table->string('item');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -17,17 +17,17 @@ class UpdateMembeCardManagementRequest extends FormRequest
     public function rules()
     {
         return [
-            'company'      => [
+            'company'  => [
                 'string',
                 'required',
             ],
-            'card_no'      => [
+            'card_no'  => [
                 'string',
                 'required',
             ],
-            'user_name_id' => [
+            'username' => [
+                'string',
                 'required',
-                'integer',
             ],
         ];
     }

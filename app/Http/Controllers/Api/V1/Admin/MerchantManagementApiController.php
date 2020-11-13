@@ -17,7 +17,7 @@ class MerchantManagementApiController extends Controller
     {
         abort_if(Gate::denies('merchant_management_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new MerchantManagementResource(MerchantManagement::with(['category', 'sub_cateogry', 'created_by', 'level'])->get());
+        return new MerchantManagementResource(MerchantManagement::with(['category', 'sub_cateogry', 'level', 'created_by'])->get());
     }
 
     public function store(StoreMerchantManagementRequest $request)
@@ -33,7 +33,7 @@ class MerchantManagementApiController extends Controller
     {
         abort_if(Gate::denies('merchant_management_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new MerchantManagementResource($merchantManagement->load(['category', 'sub_cateogry', 'created_by', 'level']));
+        return new MerchantManagementResource($merchantManagement->load(['category', 'sub_cateogry', 'level', 'created_by']));
     }
 
     public function update(UpdateMerchantManagementRequest $request, MerchantManagement $merchantManagement)

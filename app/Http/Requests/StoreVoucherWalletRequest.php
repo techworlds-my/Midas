@@ -24,6 +24,14 @@ class StoreVoucherWalletRequest extends FormRequest
                 'string',
                 'nullable',
             ],
+            'username'  => [
+                'string',
+                'required',
+            ],
+            'voucher'   => [
+                'string',
+                'nullable',
+            ],
         ];
     }
 }

@@ -10,20 +10,6 @@
         <form method="POST" action="{{ route("admin.reward-managements.store") }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
-                <label class="required" for="merchant_id">{{ trans('cruds.rewardManagement.fields.merchant') }}</label>
-                <select class="form-control select2 {{ $errors->has('merchant') ? 'is-invalid' : '' }}" name="merchant_id" id="merchant_id" required>
-                    @foreach($merchants as $id => $merchant)
-                        <option value="{{ $id }}" {{ old('merchant_id') == $id ? 'selected' : '' }}>{{ $merchant }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('merchant'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('merchant') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.rewardManagement.fields.merchant_helper') }}</span>
-            </div>
-            <div class="form-group">
                 <label class="required" for="category_id">{{ trans('cruds.rewardManagement.fields.category') }}</label>
                 <select class="form-control select2 {{ $errors->has('category') ? 'is-invalid' : '' }}" name="category_id" id="category_id" required>
                     @foreach($categories as $id => $category)
@@ -108,18 +94,24 @@
                 <span class="help-block">{{ trans('cruds.rewardManagement.fields.point_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="voucher_id">{{ trans('cruds.rewardManagement.fields.voucher') }}</label>
-                <select class="form-control select2 {{ $errors->has('voucher') ? 'is-invalid' : '' }}" name="voucher_id" id="voucher_id">
-                    @foreach($vouchers as $id => $voucher)
-                        <option value="{{ $id }}" {{ old('voucher_id') == $id ? 'selected' : '' }}>{{ $voucher }}</option>
-                    @endforeach
-                </select>
+                <label for="voucher">{{ trans('cruds.rewardManagement.fields.voucher') }}</label>
+                <input class="form-control {{ $errors->has('voucher') ? 'is-invalid' : '' }}" type="text" name="voucher" id="voucher" value="{{ old('voucher', '') }}">
                 @if($errors->has('voucher'))
                     <div class="invalid-feedback">
                         {{ $errors->first('voucher') }}
                     </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.rewardManagement.fields.voucher_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="merchant">{{ trans('cruds.rewardManagement.fields.merchant') }}</label>
+                <input class="form-control {{ $errors->has('merchant') ? 'is-invalid' : '' }}" type="text" name="merchant" id="merchant" value="{{ old('merchant', '') }}">
+                @if($errors->has('merchant'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('merchant') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.rewardManagement.fields.merchant_helper') }}</span>
             </div>
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">

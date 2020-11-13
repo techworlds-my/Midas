@@ -21,7 +21,7 @@ class MembeCardManagement extends Model
     protected $fillable = [
         'company',
         'card_no',
-        'user_name_id',
+        'username',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -30,10 +30,5 @@ class MembeCardManagement extends Model
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
-    }
-
-    public function user_name()
-    {
-        return $this->belongsTo(User::class, 'user_name_id');
     }
 }

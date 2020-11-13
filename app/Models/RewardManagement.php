@@ -21,7 +21,6 @@ class RewardManagement extends Model
     ];
 
     protected $fillable = [
-        'merchant_id',
         'category_id',
         'expired',
         'title',
@@ -30,7 +29,8 @@ class RewardManagement extends Model
         'referral_amount',
         'bonus',
         'point',
-        'voucher_id',
+        'voucher',
+        'merchant',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -39,11 +39,6 @@ class RewardManagement extends Model
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
-    }
-
-    public function merchant()
-    {
-        return $this->belongsTo(MerchantManagement::class, 'merchant_id');
     }
 
     public function category()
@@ -59,10 +54,5 @@ class RewardManagement extends Model
     public function setExpiredAttribute($value)
     {
         $this->attributes['expired'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
-    }
-
-    public function voucher()
-    {
-        return $this->belongsTo(VoucherManagement::class, 'voucher_id');
     }
 }

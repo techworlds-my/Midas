@@ -57,10 +57,6 @@ class StoreMerchantManagementRequest extends FormRequest
                 'required',
                 'integer',
             ],
-            'created_by_id'    => [
-                'required',
-                'integer',
-            ],
             'website'          => [
                 'string',
                 'nullable',

@@ -128,7 +128,7 @@
                             {{ trans('cruds.itemManagement.fields.merchant') }}
                         </th>
                         <td>
-                            {{ $itemManagement->merchant->merchant ?? '' }}
+                            {{ $itemManagement->merchant }}
                         </td>
                     </tr>
                 </tbody>

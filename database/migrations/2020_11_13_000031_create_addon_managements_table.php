@@ -13,6 +13,7 @@ class CreateAddonManagementsTable extends Migration
             $table->string('title');
             $table->string('price');
             $table->boolean('is_enable')->default(0);
+            $table->string('item')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

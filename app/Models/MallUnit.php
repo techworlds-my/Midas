@@ -21,10 +21,10 @@ class MallUnit extends Model
     protected $fillable = [
         'unit_no',
         'floor',
-        'merchant_id',
         'size',
         'status',
         'rental',
+        'merchant',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -33,10 +33,5 @@ class MallUnit extends Model
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
-    }
-
-    public function merchant()
-    {
-        return $this->belongsTo(MerchantManagement::class, 'merchant_id');
     }
 }

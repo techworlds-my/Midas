@@ -20,7 +20,7 @@ class ItemManagementApiController extends Controller
     {
         abort_if(Gate::denies('item_management_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new ItemManagementResource(ItemManagement::with(['category', 'merchant', 'created_by'])->get());
+        return new ItemManagementResource(ItemManagement::with(['category', 'created_by'])->get());
     }
 
     public function store(StoreItemManagementRequest $request)
@@ -40,7 +40,7 @@ class ItemManagementApiController extends Controller
     {
         abort_if(Gate::denies('item_management_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new ItemManagementResource($itemManagement->load(['category', 'merchant', 'created_by']));
+        return new ItemManagementResource($itemManagement->load(['category', 'created_by']));
     }
 
     public function update(UpdateItemManagementRequest $request, ItemManagement $itemManagement)

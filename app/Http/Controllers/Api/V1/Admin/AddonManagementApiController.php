@@ -17,7 +17,7 @@ class AddonManagementApiController extends Controller
     {
         abort_if(Gate::denies('addon_management_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new AddonManagementResource(AddonManagement::with(['category', 'item'])->get());
+        return new AddonManagementResource(AddonManagement::with(['category'])->get());
     }
 
     public function store(StoreAddonManagementRequest $request)
@@ -33,7 +33,7 @@ class AddonManagementApiController extends Controller
     {
         abort_if(Gate::denies('addon_management_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new AddonManagementResource($addonManagement->load(['category', 'item']));
+        return new AddonManagementResource($addonManagement->load(['category']));
     }
 
     public function update(UpdateAddonManagementRequest $request, AddonManagement $addonManagement)

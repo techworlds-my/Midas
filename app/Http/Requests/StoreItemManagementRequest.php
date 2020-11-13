@@ -50,6 +50,10 @@ class StoreItemManagementRequest extends FormRequest
             'is_halal'    => [
                 'required',
             ],
+            'merchant'    => [
+                'string',
+                'required',
+            ],
         ];
     }
 }

@@ -151,12 +151,8 @@
                 <span class="help-block">{{ trans('cruds.itemManagement.fields.is_halal_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="merchant_id">{{ trans('cruds.itemManagement.fields.merchant') }}</label>
-                <select class="form-control select2 {{ $errors->has('merchant') ? 'is-invalid' : '' }}" name="merchant_id" id="merchant_id">
-                    @foreach($merchants as $id => $merchant)
-                        <option value="{{ $id }}" {{ (old('merchant_id') ? old('merchant_id') : $itemManagement->merchant->id ?? '') == $id ? 'selected' : '' }}>{{ $merchant }}</option>
-                    @endforeach
-                </select>
+                <label class="required" for="merchant">{{ trans('cruds.itemManagement.fields.merchant') }}</label>
+                <input class="form-control {{ $errors->has('merchant') ? 'is-invalid' : '' }}" type="text" name="merchant" id="merchant" value="{{ old('merchant', $itemManagement->merchant) }}" required>
                 @if($errors->has('merchant'))
                     <div class="invalid-feedback">
                         {{ $errors->first('merchant') }}

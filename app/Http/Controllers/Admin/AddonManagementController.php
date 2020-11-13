@@ -8,7 +8,6 @@ use App\Http\Requests\StoreAddonManagementRequest;
 use App\Http\Requests\UpdateAddonManagementRequest;
 use App\Models\AddOnCategory;
 use App\Models\AddonManagement;
-use App\Models\ItemManagement;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,9 +29,7 @@ class AddonManagementController extends Controller
 
         $categories = AddOnCategory::all()->pluck('category', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $items = ItemManagement::all()->pluck('title', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        return view('admin.addonManagements.create', compact('categories', 'items'));
+        return view('admin.addonManagements.create', compact('categories'));
     }
 
     public function store(StoreAddonManagementRequest $request)
@@ -48,11 +45,9 @@ class AddonManagementController extends Controller
 
         $categories = AddOnCategory::all()->pluck('category', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $items = ItemManagement::all()->pluck('title', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $addonManagement->load('category');
 
-        $addonManagement->load('category', 'item');
-
-        return view('admin.addonManagements.edit', compact('categories', 'items', 'addonManagement'));
+        return view('admin.addonManagements.edit', compact('categories', 'addonManagement'));
     }
 
     public function update(UpdateAddonManagementRequest $request, AddonManagement $addonManagement)
@@ -66,7 +61,7 @@ class AddonManagementController extends Controller
     {
         abort_if(Gate::denies('addon_management_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $addonManagement->load('category', 'item');
+        $addonManagement->load('category');
 
         return view('admin.addonManagements.show', compact('addonManagement'));
     }

@@ -32,9 +32,9 @@ class StoreAddonManagementRequest extends FormRequest
             'is_enable'   => [
                 'required',
             ],
-            'item_id'     => [
-                'required',
-                'integer',
+            'item'        => [
+                'string',
+                'nullable',
             ],
         ];
     }

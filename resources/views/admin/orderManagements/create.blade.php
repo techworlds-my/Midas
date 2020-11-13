@@ -34,20 +34,6 @@
                 <span class="help-block">{{ trans('cruds.orderManagement.fields.status_helper') }}</span>
             </div>
             <div class="form-group">
-                <label class="required" for="username_id">{{ trans('cruds.orderManagement.fields.username') }}</label>
-                <select class="form-control select2 {{ $errors->has('username') ? 'is-invalid' : '' }}" name="username_id" id="username_id" required>
-                    @foreach($usernames as $id => $username)
-                        <option value="{{ $id }}" {{ old('username_id') == $id ? 'selected' : '' }}>{{ $username }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('username'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('username') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.orderManagement.fields.username_helper') }}</span>
-            </div>
-            <div class="form-group">
                 <label for="voucher">{{ trans('cruds.orderManagement.fields.voucher') }}</label>
                 <input class="form-control {{ $errors->has('voucher') ? 'is-invalid' : '' }}" type="text" name="voucher" id="voucher" value="{{ old('voucher', '') }}">
                 @if($errors->has('voucher'))
@@ -132,6 +118,16 @@
                 <span class="help-block">{{ trans('cruds.orderManagement.fields.comment_helper') }}</span>
             </div>
             <div class="form-group">
+                <label for="transaction">{{ trans('cruds.orderManagement.fields.transaction') }}</label>
+                <input class="form-control {{ $errors->has('transaction') ? 'is-invalid' : '' }}" type="text" name="transaction" id="transaction" value="{{ old('transaction', '') }}">
+                @if($errors->has('transaction'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('transaction') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.orderManagement.fields.transaction_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <label class="required" for="merchant">{{ trans('cruds.orderManagement.fields.merchant') }}</label>
                 <input class="form-control {{ $errors->has('merchant') ? 'is-invalid' : '' }}" type="text" name="merchant" id="merchant" value="{{ old('merchant', '') }}" required>
                 @if($errors->has('merchant'))
@@ -142,14 +138,14 @@
                 <span class="help-block">{{ trans('cruds.orderManagement.fields.merchant_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="transaction">{{ trans('cruds.orderManagement.fields.transaction') }}</label>
-                <input class="form-control {{ $errors->has('transaction') ? 'is-invalid' : '' }}" type="text" name="transaction" id="transaction" value="{{ old('transaction', '') }}">
-                @if($errors->has('transaction'))
+                <label class="required" for="username">{{ trans('cruds.orderManagement.fields.username') }}</label>
+                <input class="form-control {{ $errors->has('username') ? 'is-invalid' : '' }}" type="text" name="username" id="username" value="{{ old('username', '') }}" required>
+                @if($errors->has('username'))
                     <div class="invalid-feedback">
-                        {{ $errors->first('transaction') }}
+                        {{ $errors->first('username') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.orderManagement.fields.transaction_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.orderManagement.fields.username_helper') }}</span>
             </div>
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">

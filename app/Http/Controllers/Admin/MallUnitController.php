@@ -7,7 +7,6 @@ use App\Http\Requests\MassDestroyMallUnitRequest;
 use App\Http\Requests\StoreMallUnitRequest;
 use App\Http\Requests\UpdateMallUnitRequest;
 use App\Models\MallUnit;
-use App\Models\MerchantManagement;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,7 +19,7 @@ class MallUnitController extends Controller
         abort_if(Gate::denies('mall_unit_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = MallUnit::with(['merchant'])->select(sprintf('%s.*', (new MallUnit)->table));
+            $query = MallUnit::query()->select(sprintf('%s.*', (new MallUnit)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -50,10 +49,6 @@ class MallUnitController extends Controller
             $table->editColumn('floor', function ($row) {
                 return $row->floor ? $row->floor : "";
             });
-            $table->addColumn('merchant_company_name', function ($row) {
-                return $row->merchant ? $row->merchant->company_name : '';
-            });
-
             $table->editColumn('size', function ($row) {
                 return $row->size ? $row->size : "";
             });
@@ -63,8 +58,11 @@ class MallUnitController extends Controller
             $table->editColumn('rental', function ($row) {
                 return $row->rental ? $row->rental : "";
             });
+            $table->editColumn('merchant', function ($row) {
+                return $row->merchant ? $row->merchant : "";
+            });
 
-            $table->rawColumns(['actions', 'placeholder', 'merchant']);
+            $table->rawColumns(['actions', 'placeholder']);
 
             return $table->make(true);
         }
@@ -76,9 +74,7 @@ class MallUnitController extends Controller
     {
         abort_if(Gate::denies('mall_unit_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $merchants = MerchantManagement::all()->pluck('company_name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        return view('admin.mallUnits.create', compact('merchants'));
+        return view('admin.mallUnits.create');
     }
 
     public function store(StoreMallUnitRequest $request)
@@ -92,11 +88,7 @@ class MallUnitController extends Controller
     {
         abort_if(Gate::denies('mall_unit_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $merchants = MerchantManagement::all()->pluck('company_name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $mallUnit->load('merchant');
-
-        return view('admin.mallUnits.edit', compact('merchants', 'mallUnit'));
+        return view('admin.mallUnits.edit', compact('mallUnit'));
     }
 
     public function update(UpdateMallUnitRequest $request, MallUnit $mallUnit)
@@ -109,8 +101,6 @@ class MallUnitController extends Controller
     public function show(MallUnit $mallUnit)
     {
         abort_if(Gate::denies('mall_unit_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $mallUnit->load('merchant');
 
         return view('admin.mallUnits.show', compact('mallUnit'));
     }

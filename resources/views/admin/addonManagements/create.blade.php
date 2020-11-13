@@ -56,12 +56,8 @@
                 <span class="help-block">{{ trans('cruds.addonManagement.fields.is_enable_helper') }}</span>
             </div>
             <div class="form-group">
-                <label class="required" for="item_id">{{ trans('cruds.addonManagement.fields.item') }}</label>
-                <select class="form-control select2 {{ $errors->has('item') ? 'is-invalid' : '' }}" name="item_id" id="item_id" required>
-                    @foreach($items as $id => $item)
-                        <option value="{{ $id }}" {{ old('item_id') == $id ? 'selected' : '' }}>{{ $item }}</option>
-                    @endforeach
-                </select>
+                <label for="item">{{ trans('cruds.addonManagement.fields.item') }}</label>
+                <input class="form-control {{ $errors->has('item') ? 'is-invalid' : '' }}" type="text" name="item" id="item" value="{{ old('item', '') }}">
                 @if($errors->has('item'))
                     <div class="invalid-feedback">
                         {{ $errors->first('item') }}

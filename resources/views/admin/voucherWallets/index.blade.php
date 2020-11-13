@@ -25,16 +25,16 @@
                         {{ trans('cruds.voucherWallet.fields.id') }}
                     </th>
                     <th>
-                        {{ trans('cruds.voucherWallet.fields.username') }}
-                    </th>
-                    <th>
                         {{ trans('cruds.voucherWallet.fields.is_redeem') }}
                     </th>
                     <th>
-                        {{ trans('cruds.voucherWallet.fields.voucher') }}
+                        {{ trans('cruds.voucherWallet.fields.usage') }}
                     </th>
                     <th>
-                        {{ trans('cruds.voucherWallet.fields.usage') }}
+                        {{ trans('cruds.voucherWallet.fields.username') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.voucherWallet.fields.voucher') }}
                     </th>
                     <th>
                         &nbsp;
@@ -93,10 +93,10 @@
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
-{ data: 'username_username', name: 'username.username' },
 { data: 'is_redeem', name: 'is_redeem' },
-{ data: 'voucher_vouchercode', name: 'voucher.vouchercode' },
 { data: 'usage', name: 'usage' },
+{ data: 'username', name: 'username' },
+{ data: 'voucher', name: 'voucher' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

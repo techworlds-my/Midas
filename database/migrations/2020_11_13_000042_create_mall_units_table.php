@@ -15,6 +15,7 @@ class CreateMallUnitsTable extends Migration
             $table->string('size');
             $table->string('status');
             $table->string('rental');
+            $table->string('merchant');
             $table->timestamps();
             $table->softDeletes();
         });

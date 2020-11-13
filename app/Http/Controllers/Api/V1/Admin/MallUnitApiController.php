@@ -17,7 +17,7 @@ class MallUnitApiController extends Controller
     {
         abort_if(Gate::denies('mall_unit_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new MallUnitResource(MallUnit::with(['merchant'])->get());
+        return new MallUnitResource(MallUnit::all());
     }
 
     public function store(StoreMallUnitRequest $request)
@@ -33,7 +33,7 @@ class MallUnitApiController extends Controller
     {
         abort_if(Gate::denies('mall_unit_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new MallUnitResource($mallUnit->load(['merchant']));
+        return new MallUnitResource($mallUnit);
     }
 
     public function update(UpdateMallUnitRequest $request, MallUnit $mallUnit)
